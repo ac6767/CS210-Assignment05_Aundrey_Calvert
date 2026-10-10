@@ -7,40 +7,48 @@
 using namespace std;
 
 // Node to store an item in a linked-list-based stack
-class StackNode {
+class StackNode
+{
 public:
     int data;
-    StackNode* next;
+    StackNode *next;
 
-    StackNode(int dataValue, StackNode* nextNode) {
+    StackNode(int dataValue, StackNode *nextNode)
+    {
         data = dataValue;
         next = nextNode;
     }
 };
 
-class LinkedListStack {
+class LinkedListStack
+{
 private:
-    StackNode* top;
+    StackNode *top;
 
 public:
-    LinkedListStack() {
+    LinkedListStack()
+    {
         top = nullptr;
     }
 
-    LinkedListStack(const vector<int>& values) {
+    LinkedListStack(const vector<int> &values)
+    {
         top = nullptr;
-        for (int value : values) {
+        for (int value : values)
+        {
             Push(value);
         }
     }
 
-    void Push(int newData) {
+    void Push(int newData)
+    {
         top = new StackNode(newData, top);
     }
 
-    int Pop() {
+    int Pop()
+    {
         // Copy top node's data
-        StackNode* poppedNode = top;
+        StackNode *poppedNode = top;
         int poppedItem = top->data;
 
         // Remove top node
@@ -53,48 +61,62 @@ public:
         return poppedItem;
     }
 
-    bool IsEmpty() {
+    bool IsEmpty()
+    {
         return top == nullptr;
     };
 
-    bool empty() const {
+    bool empty() const
+    {
         return top == nullptr;
     }
 
-    bool push(int value) {
+    bool push(int value)
+    {
         Push(value);
         return true;
     }
 
-    bool pop(int& value) {
-        if (empty()) {
+    bool pop(int &value)
+    {
+        if (empty())
+        {
             return false;
         }
         value = Pop();
         return true;
     }
 
-    ~LinkedListStack() {
-        while (top) {
-            StackNode* nodeToDelete = top;
+    ~LinkedListStack()
+    {
+        while (top)
+        {
+            StackNode *nodeToDelete = top;
             top = top->next;
             delete nodeToDelete;
         }
     }
 };
 
-class ArrayStack {
+/* clang-format off */
+    /////////////////////////////////////////////////// Array Stack ///////////////////////////////////////////////////////////////
+/* clang-format on */
+
+class ArrayStack
+{
 private:
     int allocationSize;
-    int* array;
+    int *array;
     int stackLength;
     int maxLength;
 
-    void Resize() {
+    void Resize()
+    {
         // Allocate new array and copy existing items
         int newSize = allocationSize * 2;
-        int* newArray = new int[newSize];
-        for (int i = 0; i < stackLength; i++) {
+        int *newArray = new int[newSize];
+        for (int i = 0; i < stackLength; i++)
+        {
             newArray[i] = array[i];
         }
 
@@ -105,29 +127,35 @@ private:
     }
 
 public:
-    ArrayStack(int optionalMaxLength = -1) {
+    ArrayStack(int optionalMaxLength = -1)
+    {
         allocationSize = 1;
         array = new int[allocationSize];
         stackLength = 0;
         maxLength = optionalMaxLength;
     }
 
-    int GetLength() const {
+    int GetLength() const
+    {
         return stackLength;
     }
 
-    int GetMaxLength() const {
+    int GetMaxLength() const
+    {
         return maxLength;
     }
 
-    bool Push(int item) {
+    bool Push(int item)
+    {
         // If at max length, return false
-        if (stackLength == maxLength) {
+        if (stackLength == maxLength)
+        {
             return false;
         }
 
         // Resize if length equals allocation size
-        if (stackLength == allocationSize) {
+        if (stackLength == allocationSize)
+        {
             Resize();
         }
 
@@ -137,122 +165,151 @@ public:
         return true;
     }
 
-    int Pop() {
+    int Pop()
+    {
         stackLength--;
         return array[stackLength];
     }
 
-    bool isEmpty() {
+    bool isEmpty()
+    {
         return stackLength == 0;
     }
 
-    bool IsEmpty() {
+    bool IsEmpty()
+    {
         return stackLength == 0;
     }
 
-    bool empty() const {
+    bool empty() const
+    {
         return stackLength == 0;
     }
 
-    bool push(int value) {
+    bool push(int value)
+    {
         return Push(value);
     }
 
-    bool pop(int& value) {
-        if (empty()) {
+    bool pop(int &value)
+    {
+        if (empty())
+        {
             return false;
         }
         value = Pop();
         return true;
     }
 
-    virtual ~ArrayStack() {
+    virtual ~ArrayStack()
+    {
         delete[] array;
     }
 };
 
-// Node to store an item in a linked-list-based queue
-// /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-class QueueNode {
+/* clang-format off */
+    /////////////////////////////////////////////////// Linked List Queue ///////////////////////////////////////////////////////////////
+/* clang-format on */
+
+class QueueNode
+{
 public:
     int data;
-    QueueNode* next;
+    QueueNode *next;
 
-    QueueNode(int dataValue, QueueNode* nextNode = nullptr) {
+    QueueNode(int dataValue, QueueNode *nextNode = nullptr)
+    {
         data = dataValue;
         next = nextNode;
     }
 };
 
-class LinkedListQueue {
+class LinkedListQueue
+{
 private:
-    QueueNode* front;
-    QueueNode* end;
+    QueueNode *front;
+    QueueNode *end;
 
 public:
-    LinkedListQueue() {
+    LinkedListQueue()
+    {
         front = nullptr;
         end = nullptr;
     }
 
-    LinkedListQueue(const vector<int>& values) {
+    LinkedListQueue(const vector<int> &values)
+    {
         front = nullptr;
         end = nullptr;
-        for (int value : values) {
+        for (int value : values)
+        {
             Enqueue(value);
         }
     }
 
-    void Enqueue(int newData) {
-        QueueNode* newNode = new QueueNode(newData);
-        if (nullptr == front) {
+    void Enqueue(int newData)
+    {
+        QueueNode *newNode = new QueueNode(newData);
+        if (nullptr == front)
+        {
             front = newNode;
-        } else {
+        }
+        else
+        {
             end->next = newNode;
         }
         end = newNode;
     }
 
-    int Dequeue() {
-        QueueNode* dequeuedNode = front;
+    int Dequeue()
+    {
+        QueueNode *dequeuedNode = front;
         int dequeuedItem = front->data;
 
         front = front->next;
         delete dequeuedNode;
 
-        if (nullptr == front) {
+        if (nullptr == front)
+        {
             end = nullptr;
         }
 
         return dequeuedItem;
     }
 
-    bool IsEmpty() {
+    bool IsEmpty()
+    {
         return nullptr == front;
     }
 
-    int Peek() {
+    int Peek()
+    {
         return front->data;
     }
 
-    int GetLength() {
+    int GetLength()
+    {
         int length = 0;
-        QueueNode* node = front;
-        while (node) {
+        QueueNode *node = front;
+        while (node)
+        {
             length++;
             node = node->next;
         }
         return length;
     }
 
-    void Print(ostream& printStream = cout, const string& separator = ", ") {
-        QueueNode* node = front;
-        if (node) {
+    void Print(ostream &printStream = cout, const string &separator = ", ")
+    {
+        QueueNode *node = front;
+        if (node)
+        {
             // Front item is not preceded by separator
             printStream << node->data;
             node = node->next;
         }
-        while (node) {
+        while (node)
+        {
             // Each item after the front is preceded by the separator
             printStream << separator << node->data;
             node = node->next;
@@ -260,25 +317,33 @@ public:
         cout << endl;
     }
 
-    ~LinkedListQueue() {
-        while (front) {
-            QueueNode* nodeToDelete = front;
+    ~LinkedListQueue()
+    {
+        while (front)
+        {
+            QueueNode *nodeToDelete = front;
             front = front->next;
             delete nodeToDelete;
         }
     }
 };
 
-class ArrayQueue {
+/* clang-format off */
+    /////////////////////////////////////////////////// Array Queue ///////////////////////////////////////////////////////////////
+/* clang-format on */
+
+class ArrayQueue
+{
 private:
     int allocationSize;
-    int* array;
+    int *array;
     int frontIndex;
     int length;
     int maxLength;
 
 public:
-    ArrayQueue(int maximumLength = -1) {
+    ArrayQueue(int maximumLength = -1)
+    {
         allocationSize = (0 == maximumLength) ? 0 : 1;
         array = new int[allocationSize];
         length = 0;
@@ -286,13 +351,16 @@ public:
         maxLength = maximumLength;
     }
 
-    void Resize() {
+    void Resize()
+    {
         int newSize = allocationSize * 2;
-        if (maxLength >= 0 && newSize > maxLength) {
+        if (maxLength >= 0 && newSize > maxLength)
+        {
             newSize = maxLength;
         }
-        int* newArray = new int[newSize];
-        for (int i = 0; i < length; i++) {
+        int *newArray = new int[newSize];
+        for (int i = 0; i < length; i++)
+        {
             int itemIndex = (frontIndex + i) % allocationSize;
             newArray[i] = array[itemIndex];
         }
@@ -302,11 +370,14 @@ public:
         frontIndex = 0;
     }
 
-    bool Enqueue(int item) {
-        if (length == maxLength) {
+    bool Enqueue(int item)
+    {
+        if (length == maxLength)
+        {
             return false;
         }
-        if (length == allocationSize) {
+        if (length == allocationSize)
+        {
             Resize();
         }
 
@@ -316,180 +387,253 @@ public:
         return true;
     }
 
-    int Dequeue() {
+    int Dequeue()
+    {
         int toReturn = array[frontIndex];
         length--;
         frontIndex = (frontIndex + 1) % allocationSize;
         return toReturn;
     }
 
-    bool IsEmpty() {
+    bool IsEmpty()
+    {
         return 0 == length;
     }
 
-    bool empty() const {
+    bool empty() const
+    {
         return length == 0;
     }
 
-    bool enqueue(int value) {
+    bool enqueue(int value)
+    {
         return Enqueue(value);
     }
 
-    bool dequeue(int& value) {
-        if (empty()) {
+    bool dequeue(int &value)
+    {
+        if (empty())
+        {
             return false;
         }
         value = Dequeue();
         return true;
     }
 
-    int Peek() {
+    int Peek()
+    {
         return array[frontIndex];
     }
 
-    void Print(ostream& printStream = cout, const string& separator = ", ") {
-        if (length > 0) {
+    void Print(ostream &printStream = cout, const string &separator = ", ")
+    {
+        if (length > 0)
+        {
             // Front item is not preceded by separator
             printStream << array[frontIndex];
         }
-        for (int i = 1; i < length; i++) {
+        for (int i = 1; i < length; i++)
+        {
             // Each item after the front is preceded by the separator
             int index = (frontIndex + i) % allocationSize;
             printStream << separator << array[index];
         }
     }
 
-    int GetLength() {
+    int GetLength()
+    {
         return length;
     }
 
-    int GetMaxLength() {
+    int GetMaxLength()
+    {
         return maxLength;
     }
 
-    ~ArrayQueue() {
+    ~ArrayQueue()
+    {
         delete[] array;
     }
 };
 
-class DequeNode {
+/* clang-format off */
+    /////////////////////////////////////////////////// Linked List Deque ///////////////////////////////////////////////////////////////
+/* clang-format on */
+
+class DequeNode
+{
 public:
     int data;
-    DequeNode* previous;
-    DequeNode* next;
+    DequeNode *previous;
+    DequeNode *next;
 
     explicit DequeNode(int value) : data(value), previous(nullptr), next(nullptr) {}
 };
 
-class LinkedListDeque {
+class LinkedListDeque
+{
 private:
-    DequeNode* front = nullptr;
-    DequeNode* back = nullptr;
+    DequeNode *front = nullptr;
+    DequeNode *back = nullptr;
 
 public:
-    bool empty() const {
+    bool empty() const
+    {
         return front == nullptr;
     }
 
-    bool pushFront(int value) {
-        DequeNode* node = new DequeNode(value);
+    bool pushFront(int value)
+    {
+        DequeNode *node = new DequeNode(value);
         node->next = front;
-        if (front) {
+        if (front)
+        {
             front->previous = node;
-        } else {
+        }
+        else
+        {
             back = node;
         }
         front = node;
         return true;
     }
 
-    bool pushBack(int value) {
-        DequeNode* node = new DequeNode(value);
+    bool pushBack(int value)
+    {
+        DequeNode *node = new DequeNode(value);
         node->previous = back;
-        if (back) {
+        if (back)
+        {
             back->next = node;
-        } else {
+        }
+        else
+        {
             front = node;
         }
         back = node;
         return true;
     }
 
-    bool popFront(int& value) {
-        if (empty()) {
+    bool popFront(int &value)
+    {
+        if (empty())
+        {
             return false;
         }
-        DequeNode* node = front;
+        DequeNode *node = front;
         value = node->data;
         front = node->next;
-        if (front) {
+        if (front)
+        {
             front->previous = nullptr;
-        } else {
+        }
+        else
+        {
             back = nullptr;
         }
         delete node;
         return true;
     }
 
-    bool popBack(int& value) {
-        if (empty()) {
+    bool popBack(int &value)
+    {
+        if (empty())
+        {
             return false;
         }
-        DequeNode* node = back;
+        DequeNode *node = back;
         value = node->data;
         back = node->previous;
-        if (back) {
+        if (back)
+        {
             back->next = nullptr;
-        } else {
+        }
+        else
+        {
             front = nullptr;
         }
         delete node;
         return true;
     }
 
-    ~LinkedListDeque() {
+    ~LinkedListDeque()
+    {
         int value;
-        while (popFront(value)) {
+        while (popFront(value))
+        {
         }
     }
 };
 
-class ArrayDeque {
+/* clang-format off */
+    /////////////////////////////////////////////////// Array Deque /////////////////////////////////////////////////////////////// AI used to create Array Deque
+/* clang-format on */
+
+class ArrayDeque
+{
 private:
-    vector<int> items;
+    int *data;
+    int capacity;
+    int frontIndex;
+    int count;
+
+    void Resize()
+    {
+        int newCap = capacity * 2;
+        int *newData = new int[newCap];
+        for (int i = 0; i < count; i++)
+            newData[i] = data[(frontIndex + i) % capacity];
+        delete[] data;
+        data = newData;
+        capacity = newCap;
+        frontIndex = 0;
+    }
 
 public:
-    bool empty() const {
-        return items.empty();
-    }
+    ArrayDeque() : data(new int[1]), capacity(1), frontIndex(0), count(0) {}
+    ArrayDeque(const ArrayDeque &) = delete;
+    ArrayDeque &operator=(const ArrayDeque &) = delete;
 
-    bool pushFront(int value) {
-        items.insert(items.begin(), value);
+    bool empty() const { return count == 0; }
+
+    bool pushBack(int v)
+    {
+        if (count == capacity)
+            Resize();
+        data[(frontIndex + count) % capacity] = v;
+        count++;
         return true;
     }
 
-    bool pushBack(int value) {
-        items.push_back(value);
+    bool pushFront(int v)
+    {
+        if (count == capacity)
+            Resize();
+        frontIndex = (frontIndex - 1 + capacity) % capacity;
+        data[frontIndex] = v;
+        count++;
         return true;
     }
 
-    bool popFront(int& value) {
-        if (empty()) {
+    bool popFront(int &v)
+    {
+        if (empty())
             return false;
-        }
-        value = items.front();
-        items.erase(items.begin());
+        v = data[frontIndex];
+        frontIndex = (frontIndex + 1) % capacity;
+        count--;
         return true;
     }
 
-    bool popBack(int& value) {
-        if (empty()) {
+    bool popBack(int &v)
+    {
+        if (empty())
             return false;
-        }
-        value = items.back();
-        items.pop_back();
+        v = data[(frontIndex + count - 1) % capacity];
+        count--;
         return true;
     }
+
+    ~ArrayDeque() { delete[] data; }
 };
-
 #endif
